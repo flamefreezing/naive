@@ -40,6 +40,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
         // Lombok for reducing boilerplate
         compileOnly 'org.projectlombok:lombok'

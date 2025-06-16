@@ -1,6 +1,5 @@
-package application.controller;
+package app.controller;
 
-import common.dto.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @GetMapping
-    public Object testController() {
-        return ApiResponse.success("OK");
+    public String test(){
+        return "API Gateway Testing...";
     }
 }
