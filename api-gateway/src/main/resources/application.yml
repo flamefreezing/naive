@@ -28,4 +28,4 @@ eureka:
 
 app:
   jwt:
-    secret: abccccccccccccccc
+    secret: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789

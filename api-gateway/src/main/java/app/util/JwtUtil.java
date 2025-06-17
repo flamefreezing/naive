@@ -2,12 +2,14 @@ package app.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 
+@Setter
 @ConfigurationProperties(prefix = "app.jwt")
 public class JwtUtil {
 
