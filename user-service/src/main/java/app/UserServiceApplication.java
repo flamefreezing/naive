@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
 @EnableConfigurationProperties(JwtUtil.class)
-@ComponentScan(basePackages = {"common.exception"})
+@ComponentScan(basePackages = {"common"})
 public class UserServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserServiceApplication.class, args);

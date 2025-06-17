@@ -19,7 +19,6 @@ spring:
     password: 123456
     driver-class-name: org.postgresql.Driver
 
-
 eureka:
   client:
     service-url:
@@ -30,3 +29,4 @@ app:
   jwt:
     secret: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
     expiration: 864000
+
