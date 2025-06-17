@@ -1,22 +1,20 @@
-package common.config;
+package app.entity;
 
-import common.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private final User user;
 
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
-
-    public String getUserId() {
-        return user.getUserId();
+    public UUID getUserId() {
+        return user.getId();
     }
 
     @Override

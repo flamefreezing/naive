@@ -1,20 +1,28 @@
 package app.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import app.dto.LoginRequestDto;
+import app.dto.LoginResponseDto;
+import app.dto.RegisterRequestDto;
+import app.dto.RegisterResponseDto;
+import app.service.AuthService;
+import common.dto.ApiResponse;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @GetMapping("/register")
-    public String test() {
-        return "Register Testing...!!";
+    private final AuthService authService;
+
+    @PostMapping("/auth/register")
+    public ApiResponse<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+        return ApiResponse.success(authService.register(registerRequestDto));
     }
 
-    @GetMapping("/login")
-    public String retest() {
-        return "Login Testing...!!";
+    @PostMapping("/auth/login")
+    public ApiResponse<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        return ApiResponse.success(authService.login(loginRequestDto));
     }
 }

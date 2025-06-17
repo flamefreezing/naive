@@ -1,6 +1,6 @@
 package app.filter;
 
-import common.util.JwtUtil;
+import app.util.JwtUtil;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -28,34 +28,30 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         String path = request.getURI().getPath().replaceFirst("^/api", "");
-//
-//        System.out.println("path: " + path);
-//
-//        // Skip authentication for excluded paths
-//        if (excludedPaths.stream().anyMatch(path::startsWith)) {
-//            return chain.filter(exchange);
-//        }
-//
-//        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-//
-//        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-//            return handleUnauthorized(exchange);
-//        }
-//
-//        String token = authHeader.substring(7);
-//
-//        if (!jwtUtil.isTokenValid(token)) {
-//            return handleUnauthorized(exchange);
-//        }
-//
-//        // Add user context to headers for downstream services
-//        ServerHttpRequest modifiedRequest = request.mutate()
-//                .header("X-User-Id", jwtUtil.getUserIdFromToken(token))
-//                .header("X-Username", jwtUtil.getUsernameFromToken(token))
-//                .header("X-User-Roles", String.join(",", jwtUtil.getRolesFromToken(token)))
-//                .build();
 
-        ServerHttpRequest modifiedRequest = request.mutate().build();
+        // Skip authentication for excluded paths
+        if (excludedPaths.stream().anyMatch(path::startsWith)) {
+            return chain.filter(exchange);
+        }
+
+        String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return handleUnauthorized(exchange);
+        }
+
+        String token = authHeader.substring(7);
+
+        if (!jwtUtil.isTokenValid(token)) {
+            return handleUnauthorized(exchange);
+        }
+
+        // Add user context to headers for downstream services
+        ServerHttpRequest modifiedRequest = request.mutate()
+                .header("X-User-Id", jwtUtil.getUserIdFromToken(token))
+                .header("X-Username", jwtUtil.getUsernameFromToken(token))
+                .header("X-User-Roles", String.join(",", jwtUtil.getRolesFromToken(token)))
+                .build();
 
         return chain.filter(exchange.mutate().request(modifiedRequest).build());
     }

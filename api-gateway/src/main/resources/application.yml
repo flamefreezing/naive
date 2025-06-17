@@ -29,4 +29,3 @@ eureka:
 app:
   jwt:
     secret: abccccccccccccccc
-    expiration: 864000
