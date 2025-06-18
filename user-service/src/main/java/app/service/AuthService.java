@@ -7,5 +7,6 @@ import app.dto.RegisterResponseDto;
 
 public interface AuthService {
     String register(RegisterRequestDto registerRequestDto);
+    String verify(String token);
     LoginResponseDto login(LoginRequestDto loginRequestDto);
 }

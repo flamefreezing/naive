@@ -11,16 +11,22 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/register")
+    @PostMapping("/register")
     public ApiResponse<String> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
         return ApiResponse.success(authService.register(registerRequestDto));
     }
 
-    @PostMapping("/auth/login")
+    @GetMapping("/verify")
+    public ApiResponse<String> verify(@RequestParam String token) {
+        return ApiResponse.success(authService.verify(token));
+    }
+
+    @PostMapping("/login")
     public ApiResponse<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         return ApiResponse.success(authService.login(loginRequestDto));
     }

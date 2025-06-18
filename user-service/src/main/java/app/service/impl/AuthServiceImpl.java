@@ -3,7 +3,6 @@ package app.service.impl;
 import app.dto.LoginRequestDto;
 import app.dto.LoginResponseDto;
 import app.dto.RegisterRequestDto;
-import app.dto.RegisterResponseDto;
 import app.entity.CustomUserDetails;
 import app.entity.User;
 import app.repository.UserRepository;
@@ -13,7 +12,6 @@ import app.util.RandomUtil;
 import common.event.UserRegisteredEvent;
 import common.exception.BusinessException;
 import common.service.CacheService;
-import common.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -23,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +31,6 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final KafkaTemplate<String, Object> kafkaTemplate;
-    private final RedisService redisService;
     private final CacheService cacheService;
 
     @Override
@@ -68,9 +66,27 @@ public class AuthServiceImpl implements AuthService {
         kafkaTemplate.send("user.registered", event);
 
         String emailVerifyTokenKey = cacheService.buildKey("email", "verify", verifyToken);
-        redisService.set(emailVerifyTokenKey, user.getId(), Duration.ofSeconds(60 * 15));
+        cacheService.cache(emailVerifyTokenKey, user.getId(),  Duration.ofSeconds(60 * 15));
 
         return "Successfully registered, an email will be sent to your email address.";
+    }
+
+    @Override
+    public String verify(String token) {
+        String emailVerifyTokenKey = cacheService.buildKey("email", "verify", token);
+        UUID userId = cacheService.getFromCache(emailVerifyTokenKey, UUID.class);
+        if(userId == null){
+            throw new BusinessException("Invalid token", HttpStatus.BAD_REQUEST);
+        }
+        cacheService.invalidate(emailVerifyTokenKey);
+
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new BusinessException("User not found", HttpStatus.BAD_REQUEST)
+        );
+        user.setIsVerified(true);
+        userRepository.save(user);
+
+        return "Successfully verified!";
     }
 
     @Override
