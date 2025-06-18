@@ -33,7 +33,7 @@ public class User extends BaseEntity {
     @Column(length = 255)
     private String fullName;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String profilePictureUrl;
 
     @Column(columnDefinition = "TEXT")
@@ -44,10 +44,10 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String location;
 
-    @Column(nullable = false, length = 255)
+    @Column(length = 255)
     private String website;
 
     private Boolean isVerified = false;

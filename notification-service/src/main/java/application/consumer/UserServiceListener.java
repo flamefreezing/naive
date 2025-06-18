@@ -22,7 +22,7 @@ public class UserServiceListener {
         Map<String, Object> variables = new HashMap<>();
         variables.put("username", event.getUserName());
         variables.put("email", event.getEmail());
-        variables.put("timestamp", event.getTimestamp());
-        mailService.sendHtmlEmail(event.getEmail(), "Verify Email", variables, EmailTemplate.REGISTRATION_EMAIL);
+        variables.put("token", event.getToken());
+        mailService.sendHtmlEmail(event.getEmail(), "Verify email to activate your account", variables, EmailTemplate.REGISTRATION_EMAIL);
     }
 }

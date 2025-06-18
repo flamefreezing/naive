@@ -9,8 +9,10 @@ import app.entity.User;
 import app.repository.UserRepository;
 import app.service.AuthService;
 import app.util.JwtUtil;
+import app.util.RandomUtil;
 import common.event.UserRegisteredEvent;
 import common.exception.BusinessException;
+import common.service.CacheService;
 import common.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -31,6 +33,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtUtil;
     private final KafkaTemplate<String, Object> kafkaTemplate;
     private final RedisService redisService;
+    private final CacheService cacheService;
 
     @Override
     public String register(RegisterRequestDto registerRequestDto) {
@@ -50,18 +53,24 @@ public class AuthServiceImpl implements AuthService {
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .build();
 
+        userRepository.save(user);
+
+        String verifyToken = RandomUtil.generateRandom();
+
         UserRegisteredEvent event = UserRegisteredEvent.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
                 .userName(user.getUsername())
+                .token(verifyToken)
                 .timestamp(LocalDateTime.now())
                 .build();
 
         kafkaTemplate.send("user.registered", event);
 
-        redisService.set(user.getUsername(), user.getPassword(), Duration.ofHours(1));
+        String emailVerifyTokenKey = cacheService.buildKey("email", "verify", verifyToken);
+        redisService.set(emailVerifyTokenKey, user.getId(), Duration.ofSeconds(60 * 15));
 
-        return "Successfully Registered!";
+        return "Successfully registered, an email will be sent to your email address.";
     }
 
     @Override
@@ -72,6 +81,14 @@ public class AuthServiceImpl implements AuthService {
 
         if(!passwordEncoder.matches(loginRequestDto.getPassword(), user.getPassword())){
             throw new BusinessException("Wrong password", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!user.getIsActive()) {
+            throw new BusinessException("User is not active", HttpStatus.BAD_REQUEST);
+        }
+
+        if (!user.getIsVerified()) {
+            throw new BusinessException("User is not verified", HttpStatus.BAD_REQUEST);
         }
 
         UserDetails userDetails = new CustomUserDetails(user);

@@ -17,5 +17,7 @@ public class UserRegisteredEvent {
     private UUID userId;
     private String userName;
     private String email;
+    private String token;
     private LocalDateTime timestamp;
+
 }

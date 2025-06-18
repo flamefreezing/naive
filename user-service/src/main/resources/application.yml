@@ -47,4 +47,11 @@ app:
     secret: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
     expiration: 864000
 
+cache:
+  redis:
+    # Default TTL cho cache
+    default-ttl: 3600
+    # Prefix cho keys
+    key-prefix: user
+
 

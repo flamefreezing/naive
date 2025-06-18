@@ -3,7 +3,6 @@ package app.controller;
 import app.dto.LoginRequestDto;
 import app.dto.LoginResponseDto;
 import app.dto.RegisterRequestDto;
-import app.dto.RegisterResponseDto;
 import app.service.AuthService;
 import common.dto.ApiResponse;
 import jakarta.validation.Valid;
