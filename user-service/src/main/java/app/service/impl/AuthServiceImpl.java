@@ -11,6 +11,7 @@ import app.service.AuthService;
 import app.util.JwtUtil;
 import common.event.UserRegisteredEvent;
 import common.exception.BusinessException;
+import common.service.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Service
@@ -28,9 +30,10 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final KafkaTemplate<String, Object> kafkaTemplate;
+    private final RedisService redisService;
 
     @Override
-    public RegisterResponseDto register(RegisterRequestDto registerRequestDto) {
+    public String register(RegisterRequestDto registerRequestDto) {
         boolean isExistUsername = userRepository.findByUsername(registerRequestDto.getUsername()).isPresent();
         if(isExistUsername){
           throw new BusinessException("Username already existed", HttpStatus.BAD_REQUEST);
@@ -47,10 +50,6 @@ public class AuthServiceImpl implements AuthService {
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .build();
 
-        UserDetails userDetails = new CustomUserDetails(user);
-        String accessToken = jwtUtil.generateAccessToken(userDetails);
-        String refreshToken = jwtUtil.generateRefreshToken(userDetails);
-
         UserRegisteredEvent event = UserRegisteredEvent.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
@@ -60,10 +59,9 @@ public class AuthServiceImpl implements AuthService {
 
         kafkaTemplate.send("user.registered", event);
 
-        return RegisterResponseDto.builder()
-                .accessToken(accessToken)
-                .refreshToken(refreshToken)
-                .build();
+        redisService.set(user.getUsername(), user.getPassword(), Duration.ofHours(1));
+
+        return "Successfully Registered!";
     }
 
     @Override

@@ -19,6 +19,23 @@ spring:
     password: 123456
     driver-class-name: org.postgresql.Driver
 
+  data:
+    redis:
+      # Connection settings
+      host: localhost
+      port: 6379
+      password:
+      timeout: 5000
+
+      # Connection pool settings (Lettuce)
+      lettuce:
+        pool:
+          max-active: 20
+          max-idle: 10
+          min-idle: 2
+          max-wait: 3000
+          time-between-eviction-runs: 30s
+
 eureka:
   client:
     service-url:
@@ -29,4 +46,5 @@ app:
   jwt:
     secret: ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
     expiration: 864000
+
 

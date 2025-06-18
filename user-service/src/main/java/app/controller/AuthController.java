@@ -17,7 +17,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/auth/register")
-    public ApiResponse<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+    public ApiResponse<String> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
         return ApiResponse.success(authService.register(registerRequestDto));
     }
 

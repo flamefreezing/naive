@@ -6,6 +6,6 @@ import app.dto.RegisterRequestDto;
 import app.dto.RegisterResponseDto;
 
 public interface AuthService {
-    RegisterResponseDto register(RegisterRequestDto registerRequestDto);
+    String register(RegisterRequestDto registerRequestDto);
     LoginResponseDto login(LoginRequestDto loginRequestDto);
 }
