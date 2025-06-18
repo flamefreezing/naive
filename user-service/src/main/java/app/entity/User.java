@@ -50,10 +50,13 @@ public class User extends BaseEntity {
     @Column(length = 255)
     private String website;
 
+    @Builder.Default
     private Boolean isVerified = false;
 
+    @Builder.Default
     private Boolean isPrivate = false;
 
+    @Builder.Default
     private Boolean isActive = true;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
