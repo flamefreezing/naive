@@ -18,7 +18,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     private final JwtUtil jwtUtil;
 
-    private final List<String> excludedPaths = Arrays.asList("/auth/login", "/auth/register");
+    private final List<String> excludedPaths = Arrays.asList("/auth/login", "/auth/register", "/auth/verify");
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;

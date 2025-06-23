@@ -3,7 +3,6 @@ package app.controller;
 import app.dto.LoginRequestDto;
 import app.dto.LoginResponseDto;
 import app.dto.RegisterRequestDto;
-import app.dto.RegisterResponseDto;
 import app.service.AuthService;
 import common.dto.ApiResponse;
 import jakarta.validation.Valid;
@@ -12,17 +11,23 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/register")
-    public ApiResponse<RegisterResponseDto> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+    @PostMapping("/register")
+    public ApiResponse<String> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
         return ApiResponse.success(authService.register(registerRequestDto));
     }
 
-    @PostMapping("/auth/login")
-    public ApiResponse<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+    @GetMapping("/verify")
+    public ApiResponse<String> verify(@RequestParam String token) {
+        return ApiResponse.success(authService.verify(token));
+    }
+
+    @PostMapping("/login")
+    public ApiResponse<LoginResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         return ApiResponse.success(authService.login(loginRequestDto));
     }
 }

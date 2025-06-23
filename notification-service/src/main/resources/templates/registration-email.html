@@ -125,7 +125,7 @@
     </xml>
     <![endif]-->
 </head>
-<body id="body" class="t49" style="min-width:100%;Margin:0px;padding:0px;background-color:#F9F9F9;"><div class="t48" style="background-color:#F9F9F9;"><table width="100%" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td class="t47" style="font-size:0;line-height:0;mso-line-height-rule:exactly;background-color:#F9F9F9;background-image:none;background-repeat:repeat;background-size:auto;background-position:center top;" valign="top" align="center">
+<body th:inline="text" id="body" class="t49" style="min-width:100%;Margin:0px;padding:0px;background-color:#F9F9F9;"><div class="t48" style="background-color:#F9F9F9;"><table width="100%" cellpadding="0" cellspacing="0" border="0" align="center"><tr><td class="t47" style="font-size:0;line-height:0;mso-line-height-rule:exactly;background-color:#F9F9F9;background-image:none;background-repeat:repeat;background-size:auto;background-position:center top;" valign="top" align="center">
     <!--[if mso]>
     <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false">
         <v:fill color="#F9F9F9"/>
@@ -143,7 +143,7 @@
                 </td></tr></table>
             </td></tr><tr><td><div class="t12" style="mso-line-height-rule:exactly;mso-line-height-alt:17px;line-height:17px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
                 <table class="t16" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="308" class="t15" style="width:308px;">
-                    <table class="t14" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t13"><p class="t11" style="margin:0;Margin:0;font-family:Inter,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:22px;font-weight:500;font-style:normal;font-size:15px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#424040;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">Hi Flame,</p></td></tr></table>
+                    <table class="t14" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t13"><p class="t11" style="margin:0;Margin:0;font-family:Inter,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:22px;font-weight:500;font-style:normal;font-size:15px;text-decoration:none;text-transform:none;letter-spacing:-0.6px;direction:ltr;color:#424040;text-align:center;mso-line-height-rule:exactly;mso-text-raise:2px;">Hi [[${username}]],</p></td></tr></table>
                 </td></tr></table>
             </td></tr><tr><td><div class="t18" style="mso-line-height-rule:exactly;mso-line-height-alt:4px;line-height:4px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
                 <table class="t22" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="308" class="t21" style="width:308px;">
@@ -151,7 +151,7 @@
                 </td></tr></table>
             </td></tr><tr><td><div class="t24" style="mso-line-height-rule:exactly;mso-line-height-alt:20px;line-height:20px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
                 <table class="t28" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="154" class="t27" style="width:154px;">
-                    <table class="t26" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t25" style="overflow:hidden;background-color:#0057FF;text-align:center;line-height:40px;mso-line-height-rule:exactly;mso-text-raise:8px;border-radius:8px 8px 8px 8px;"><a class="t23" href="#" style="display:block;margin:0;Margin:0;font-family:Inter,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:40px;font-weight:700;font-style:normal;font-size:15px;text-decoration:none;letter-spacing:-0.5px;direction:ltr;color:#FFFFFF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:8px;" target="_blank">Verify my account</a></td></tr></table>
+                    <table class="t26" cellpadding="0" cellspacing="0" width="100%" style="width:100%;"><tr><td class="t25" style="overflow:hidden;background-color:#0057FF;text-align:center;line-height:40px;mso-line-height-rule:exactly;mso-text-raise:8px;border-radius:8px 8px 8px 8px;"><a class="t23" th:href="@{'http://localhost:8080/api/auth/verify?token=' + ${token}}" style="display:block;margin:0;Margin:0;font-family:Inter,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Arial,sans-serif;line-height:40px;font-weight:700;font-style:normal;font-size:15px;text-decoration:none;letter-spacing:-0.5px;direction:ltr;color:#FFFFFF;text-align:center;mso-line-height-rule:exactly;mso-text-raise:8px;" target="_blank">Verify my account</a></td></tr></table>
                 </td></tr></table>
             </td></tr><tr><td><div class="t30" style="mso-line-height-rule:exactly;mso-line-height-alt:24px;line-height:24px;font-size:1px;display:block;">&nbsp;&nbsp;</div></td></tr><tr><td align="center">
                 <table class="t34" cellpadding="0" cellspacing="0" style="Margin-left:auto;Margin-right:auto;"><tr><td width="317" class="t33" style="width:318px;">
