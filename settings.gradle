@@ -6,3 +6,5 @@ include 'post-service'
 include 'notification-service'
 include 'api-gateway'
 include 'eureka-server'
+include 'graph-service'
+
